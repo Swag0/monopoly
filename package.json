@@ -1,0 +1,24 @@
+{
+  "name": "monopoly",
+  "version": "1.0.0",
+  "description": "monopoly discord bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swag0/monopoly.git"
+  },
+  "author": "Swag0",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swag0/monopoly/issues"
+  },
+  "homepage": "https://github.com/Swag0/monopoly#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "discord.js": "^12.5.1",
+    "keyv": "^4.0.3"
+  }
+}
