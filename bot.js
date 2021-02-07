@@ -2,18 +2,23 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const chalk = require('chalk');
 const { prefix, token } = require('./config.json');
+const Player = require('./player.js');
+const Match = require('./games.js');
 
 const Keyv = require('keyv');
 const keyv = new Keyv();
 
+
+let games = [
+]
+
 keyv.on('error', err => console.error(chalk.redBright('KEYV ERROR'), err));
-
-
+/*
 (async () => {
-    await keyv.set('position', 0);
-    await keyv.get('position');
-    console.log(await keyv.get('position'));
-})();
+    await keyv.set('games', games);
+    let x = await keyv.get('games');
+    console.log(x[0].players[0].id);
+})();*/
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -40,7 +45,7 @@ client.on("message", message => {
     if (!client.commands.has(command)) return;
 
     try {
-        client.commands.get(command).execute(message, args, keyv);
+        client.commands.get(command).execute(message, args, keyv, games);
     } catch (error) {
         console.error(error);
         message.reply('there was an error trying to execute that command!');
