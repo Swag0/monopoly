@@ -33,7 +33,7 @@ for (const file of commandFiles) {
 client.on('ready', () => {
     console.log(`Watching ${client.guilds.cache.size} Servers.`);
     console.error(chalk.greenBright(`Logged in as ${client.user.tag}!`));
-    client.user.setActivity("dogecoin. | &help", { type: "WATCHING" }); //Watching stocks crash.
+    client.user.setActivity("dogecoin. | %help", { type: "WATCHING" }); //Watching stocks crash.
 });
 
 client.on("message", message => {

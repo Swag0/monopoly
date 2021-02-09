@@ -15,19 +15,27 @@ module.exports = {
 
         let num = Math.round((Math.random()*6)+1);
 
+        let inGame = false;
+
         for (let i = 0; i < games[givenCode].players.length; i++) {
             if (games[givenCode].players[i].id === message.author.id) {
                 if (i != games[givenCode].turn) {
                     message.reply("It is not your turn.");
                     return;
                 }
+
+                inGame = true;
+
                 message.reply("You rolled a " + num + ".");
                 console.log(games[givenCode].players[i].position);
                 games[givenCode].players[i].position += num;
                 if (i + 1 === games[givenCode].players.length) games[givenCode].turn = 0;
                 else games[givenCode].turn++;
-            } else if (i + 1 === games[givenCode].players.length) message.channel.send("You are not in that game.");
+            }
         }
+
+        if (!inGame) message.channel.send("You are not in that game.");
+
 		(async () => {
             
             await keyv.set('games', games);

@@ -7,13 +7,17 @@ module.exports = {
 	execute(message, args, keyv, games) {
 
 		let matchCode = 0;
-
-		for (let i = 0; i < 100; i++) {
+		let i = 0;
+		
+		while (true) {
 			if (games[i] == undefined) {
 				matchCode = i;
-				i = 100;
+				break;
 			}
+			i++;
 		}
+
+		matchCode++;
 
 		games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)]));
 
