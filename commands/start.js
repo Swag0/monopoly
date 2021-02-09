@@ -8,7 +8,7 @@ module.exports = {
 
 		let matchCode = 0;
 		let i = 0;
-		
+
 		while (true) {
 			if (games[i] == undefined) {
 				matchCode = i;
@@ -16,8 +16,6 @@ module.exports = {
 			}
 			i++;
 		}
-
-		matchCode++;
 
 		games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)]));
 

@@ -13,7 +13,8 @@ module.exports = {
             return;
         }
 
-        let num = Math.round((Math.random()*6)+1);
+        let num1 = Math.floor((Math.random()*6)+1);
+        let num2 = Math.floor((Math.random()*6)+1);
 
         let inGame = false;
 
@@ -26,10 +27,11 @@ module.exports = {
 
                 inGame = true;
 
-                message.reply("You rolled a " + num + ".");
-                console.log(games[givenCode].players[i].position);
-                games[givenCode].players[i].position += num;
-                if (i + 1 === games[givenCode].players.length) games[givenCode].turn = 0;
+                message.reply("You rolled a " + num1 + " and a " + num2 + ".");
+                games[givenCode].players[i].position += (num1 + num2);
+
+                if (num1 === num2) message.channel.send("You rolled doubles, so you get another roll.");
+                else if (i + 1 === games[givenCode].players.length) games[givenCode].turn = 0;
                 else games[givenCode].turn++;
             }
         }
