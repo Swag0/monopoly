@@ -33,13 +33,20 @@ module.exports = {
                 if (num1 === num2) message.channel.send("You rolled doubles, so you get another roll.");
                 else if (i + 1 === games[givenCode].players.length) games[givenCode].turn = 0;
                 else games[givenCode].turn++;
+
+                if (games[givenCode].players[i].position > 39) {
+                    games[givenCode].players[i].position = (games[givenCode].players[i].position % 40);
+                    games[givenCode].players[i].money += 5;
+                    message.channel.send("You passed GO.");
+                }
             }
         }
 
         if (!inGame) message.channel.send("You are not in that game.");
 
+        
+
 		(async () => {
-            
             await keyv.set('games', games);
 		})();
 	},

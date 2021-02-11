@@ -17,14 +17,44 @@ module.exports = {
 			i++;
 		}
 
-		games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)]));
-
 		if (message.mentions.users) {
-			for (let i = 0; i < message.mentions.users.array().length; i++) {
-				console.log(message.mentions.users.array()[i].id);
+			for (let i = 0; i < message.mentions.users.array().length; i++) { //Check if works
+				if (message.mentions.users.array()[i].bot) {
+					message.channel.send("You can't play with a bot.");
+					return;
+				}
+				if (message.mentions.users.array()[i].id === message.author.id) {
+					message.channel.send("You can't play with yourself.");
+					return;
+				}
+				for (let j = 0; j < message.mentions.users.array().length; j++) {
+					if (message.mentions.users.array()[i].id === message.mentions.users.array()[j].id) {
+						if (i != j) {
+							message.channel.send("You can't have duplicates.");
+							return;
+						}
+					}
+				}
+			}
+
+			if (message.mentions.users.array().length < 1) {
+				message.channel.send("You need to play with someone else.");
+				return;
+			}
+
+			if (message.mentions.users.array().length > 6) { //6 Player Game (Max)
+				message.channel.send("You are playing with too many people.");
+				return;
+			}
+
+			games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)]));
+
+			for (let i = 0; i < message.mentions.users.array().length; i++) { //Add player 
+				//console.log(message.mentions.users.array()[i].id);
 				games[matchCode].players.push(new Player(message.mentions.users.array()[i].id, 0, 0));
 			}
 		}
+		
 
 		(async () => {
 			message.channel.send("Started a game in room " + matchCode + ".");

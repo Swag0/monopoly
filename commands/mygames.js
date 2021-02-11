@@ -2,7 +2,7 @@ const Player = require('../player.js');
 const Match = require('../games.js');
 
 module.exports = {
-	name: 'mygame',
+	name: 'mygames',
 	description: 'Shows all games in progress',
 	execute(message, args, keyv, games) {
 
