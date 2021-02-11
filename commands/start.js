@@ -47,9 +47,10 @@ module.exports = {
 				return;
 			}
 
-			games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)]));
 
-			for (let i = 0; i < message.mentions.users.array().length; i++) { //Add player 
+			games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)], 0, "Roll")); //Adds player 1
+
+			for (let i = 0; i < message.mentions.users.array().length; i++) { //Add other players 
 				//console.log(message.mentions.users.array()[i].id);
 				games[matchCode].players.push(new Player(message.mentions.users.array()[i].id, 0, 0));
 			}

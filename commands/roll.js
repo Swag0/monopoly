@@ -25,14 +25,25 @@ module.exports = {
                     return;
                 }
 
+                if (games[givenCode].phase != "Roll") {
+                    message.reply("It is not rolling phase anymore. It is " + games[givenCode].phase.toLowerCase() + "ing phase.");
+                    return;
+                }
+
                 inGame = true;
 
                 message.reply("You rolled a " + num1 + " and a " + num2 + ".");
                 games[givenCode].players[i].position += (num1 + num2);
 
                 if (num1 === num2) message.channel.send("You rolled doubles, so you get another roll.");
-                else if (i + 1 === games[givenCode].players.length) games[givenCode].turn = 0;
-                else games[givenCode].turn++;
+                else if (i + 1 === games[givenCode].players.length)  {
+                    //games[givenCode].turn = 0;
+                    games[givenCode].phase = "Buy"
+                }
+                else {
+                    //games[givenCode].turn++;
+                    games[givenCode].phase = "Buy"
+                }
 
                 if (games[givenCode].players[i].position > 39) {
                     games[givenCode].players[i].position = (games[givenCode].players[i].position % 40);

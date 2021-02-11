@@ -61,7 +61,7 @@ module.exports = {
                           break;
                       }
                     
-                    if (spots[i] != '⬜' && spots[i] != '❎') spots[i] = MULTIPLE;
+                    if (spots[i] == RED || spots[i] == BLUE || spots[i] == GREEN || spots[i] == YELLOW || spots[i] == ORANGE || spots[i] == PURPLE || spots[i] == MULTIPLE) spots[i] = MULTIPLE;
                     else spots[i] = color;
                 }
                 //console.log(spots[i] + "; Player " + j + " at position " + i + ".");
@@ -87,9 +87,23 @@ module.exports = {
         //console.log(text);
         //message.channel.send(text);
 
+        let players = "";
+
+        if (games[gameCode].players[5]) { //6
+           players = `Player 1: ${RED}, Player 2: ${BLUE}, Player 3: ${GREEN}, Player 4: ${YELLOW}, Player 5: ${ORANGE}, Player 6: ${PURPLE}`
+        } else if (games[gameCode].players[4]) {//5
+            players = `Player 1: ${RED}, Player 2: ${BLUE}, Player 3: ${GREEN}, Player 4: ${YELLOW}, Player 5: ${ORANGE}`
+        } else if (games[gameCode].players[3]) {//4
+            players = `Player 1: ${RED}, Player 2: ${BLUE}, Player 3: ${GREEN}, Player 4: ${YELLOW}`
+        } else if (games[gameCode].players[2]) {//3
+            players = `Player 1: ${RED}, Player 2: ${BLUE}, Player 3: ${GREEN}`
+        } else if (games[gameCode].players[1]) {//2
+            players = `Player 1: ${RED}, Player 2: ${BLUE}`
+        }
+
         const board = new Discord.MessageEmbed()
         .setTitle(`Monopoly`)
-        .setDescription(`Player 1: ${RED}, Player 2: ${BLUE}`)
+        .setDescription(players)
         .addField(`${text1}`, `\u200b`)
         .addField(`${spots[39]}${spacing}${spots[16]}`, `\u200b`)
         .addField(`${spots[38]}${spacing}${spots[17]}`, `\u200b`)

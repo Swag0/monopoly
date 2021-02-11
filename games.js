@@ -2,11 +2,13 @@ class Match{
     matchID;
     players;
     turn;
+    phase; //Rolling phase and buying phase
 
-    constructor(matchID = 0, players = [], turn = 0) {
+    constructor(matchID = 0, players = [], turn = 0, phase = "Roll") {
         this.matchID = matchID;
         this.players = players;
         this.turn = turn;
+        this.phase = phase;
     }
 
     IsPlayerInGame(id) {
