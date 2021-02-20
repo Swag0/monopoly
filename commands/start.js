@@ -1,4 +1,5 @@
 const Player = require('../player.js');
+const Place = require('../place.js');
 const Match = require('../games.js');
 
 module.exports = {
@@ -46,7 +47,6 @@ module.exports = {
 				message.channel.send("You are playing with too many people.");
 				return;
 			}
-
 
 			games.push(new Match(matchCode, [new Player(message.author.id, 0, 0)], 0, "Roll")); //Adds player 1
 
