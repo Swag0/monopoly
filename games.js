@@ -46,7 +46,7 @@ class Match {
         for (let i = 0; i < 40; i++) {
             if (i === 0) this.places[i] = new Place(i, 0, -2); //special
             else {
-                this.places[i] = new Place(i, Math.ceil(i / 5), -1); //unowned
+                this.places[i] = new Place(i, Math.ceil(i / 8), -1); //unowned
             }
         }
         //console.log(this.places);
