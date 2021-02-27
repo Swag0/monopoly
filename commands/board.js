@@ -7,6 +7,8 @@ module.exports = {
 	description: 'Shows board',
 	execute(message, args, keyv, games) {
 
+        if (args[0] === undefined) return;
+
         var gameCode = parseInt(args, 10);
 
         if (games[gameCode] == undefined) {

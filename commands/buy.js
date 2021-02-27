@@ -7,6 +7,8 @@ module.exports = {
     description: 'Buys a thing',
     execute(message, args, keyv, games) {
 
+        if (args[0] === undefined) return;
+
         var gameCode = parseInt(args, 10);
 
         if (games[gameCode] == undefined) {
@@ -26,22 +28,27 @@ module.exports = {
                     message.reply("It is not buying phase anymore. It is " + games[gameCode].phase.toLowerCase() + "ing phase.");
                     return;
                 }
-
+                /** @type {Player} */
+                let player = games[gameCode].players[i];
                 inGame = true;
+
                 // Check for buyable spot.
-                if (games[gameCode].places[games[gameCode].players[i].position].owner === -1) {
-                    games[gameCode].places[games[gameCode].players[i].position].owner = i;
-                    if (games[gameCode].players[i].money < games[gameCode].places[games[gameCode].players[i].position].cost) {
-                        message.reply(`You can't buy that space. You need ¤${games[gameCode].places[games[gameCode].players[i].position].cost}.`);
+
+                let curPlace = games[gameCode].GetPlace(player.position);
+
+                if (curPlace.owner === -1) { //Gets owner
+                    curPlace.owner = i;
+                    if (player.money < curPlace.cost) {
+                        message.reply(`You can't buy that space. You need ¤${curPlace.cost}.`);
                         break;
                     }
-                    games[gameCode].players[i].money -= games[gameCode].places[games[gameCode].players[i].position].cost;
-                    message.reply(`You spent ¤${games[gameCode].places[games[gameCode].players[i].position].cost} to buy the space you are on.`);
-                } else if (games[gameCode].places[games[gameCode].players[i].position].owner === -2) {
+                    player.money -= curPlace.cost;
+                    message.reply(`You spent ¤${curPlace.cost} to buy the space you are on.`);
+                } else if (curPlace.owner === -2) {
                     message.reply("You can't buy that space.");
                     break;
                 } else {
-                    message.reply(`<@${games[gameCode].players[games[gameCode].places[games[gameCode].players[i].position].owner].id}> owns that space.`);
+                    message.reply(`<@${games[gameCode].players[curPlace.owner].id}> owns that space.`);
                     break;
                 }
             }

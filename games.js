@@ -42,11 +42,21 @@ class Match {
         return false;
     }
 
+    /**
+     * Returns the place from the given position.
+     * @param {number} position 
+     * @returns {Place}
+     */
+    GetPlace(position) {
+        return this.places[position];
+    }
+
     CreateBoard() {
         for (let i = 0; i < 40; i++) {
             if (i === 0) this.places[i] = new Place(i, 0, -2); //special
-            else {
-                this.places[i] = new Place(i, Math.ceil(i / 8), -1); //unowned
+            else { //unowned
+                this.places[i] = new Place(i, Math.round((1/145.46)*Math.pow(i+1, 2) + 4), -1);
+                //console.log(this.places[i].cost);
             }
         }
         //console.log(this.places);

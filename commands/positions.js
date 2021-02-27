@@ -6,6 +6,8 @@ module.exports = {
 	description: 'Says each players positions in ID',
 	execute(message, args, keyv, games) {
 
+        if (args[0] === undefined) return;
+
         var givenCode = parseInt(args, 10);
 
         if (games[givenCode] == undefined) {
