@@ -18,9 +18,6 @@ module.exports = {
         let num1 = Math.floor((Math.random()*6)+1);
         let num2 = Math.floor((Math.random()*6)+1);
 
-        num1 = 2;
-        num2 = 4;
-
         let inGame = false;
 
         for (let i = 0; i < games[gameCode].players.length; i++) {
@@ -41,6 +38,13 @@ module.exports = {
                 games[gameCode].players[i].position += (num1 + num2);
 
                 
+
+
+                if (games[gameCode].players[i].position >= 39) {
+                    games[gameCode].players[i].position = (games[gameCode].players[i].position % 40);
+                    games[gameCode].players[i].money += 10;
+                    message.channel.send("You passed GO.");
+                }
 
                 //rent = 1/3 price
                 /** @type {Player} */
@@ -65,12 +69,6 @@ module.exports = {
                 else {
                     //games[givenCode].turn++;
                     games[gameCode].phase = "Buy"
-                }
-
-                if (games[gameCode].players[i].position >= 39) {
-                    games[gameCode].players[i].position = (games[gameCode].players[i].position % 40);
-                    games[gameCode].players[i].money += 5;
-                    message.channel.send("You passed GO.");
                 }
             }
         }

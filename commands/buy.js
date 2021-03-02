@@ -37,11 +37,11 @@ module.exports = {
                 let curPlace = games[gameCode].GetPlace(player.position);
 
                 if (curPlace.owner === -1) { //Gets owner
-                    curPlace.owner = i;
                     if (player.money < curPlace.cost) {
                         message.reply(`You can't buy that space. You need ¤${curPlace.cost}.`);
                         break;
                     }
+                    curPlace.owner = i;
                     player.money -= curPlace.cost;
                     message.reply(`You spent ¤${curPlace.cost} to buy the space you are on.`);
                 } else if (curPlace.owner === -2) {

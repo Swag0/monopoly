@@ -19,6 +19,7 @@ module.exports = {
 
         if (gameAmt === 0) {
             message.reply("You aren't in any games right now.");
+            return;
         }
 
         let yourGames = [];
