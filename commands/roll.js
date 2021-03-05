@@ -1,5 +1,6 @@
 const Player = require('../player.js');
 const Match = require('../games.js');
+const ff = require('./ff.js');
 
 module.exports = {
 	name: 'roll',
@@ -40,7 +41,7 @@ module.exports = {
                 
 
 
-                if (games[gameCode].players[i].position >= 39) {
+                if (games[gameCode].players[i].position > 39) {
                     games[gameCode].players[i].position = (games[gameCode].players[i].position % 40);
                     games[gameCode].players[i].money += 10;
                     message.channel.send("You passed GO.");
@@ -56,6 +57,10 @@ module.exports = {
                     player.money -= Math.round(curPlace.cost / 3);
                     games[gameCode].players[curPlace.owner].money += Math.round(curPlace.cost / 3);
                     message.reply(`You gave ¤${Math.round(curPlace.cost / 3)} to <@${games[gameCode].players[curPlace.owner].id}>.`);
+                    if (player.money < 0) {
+                        message.reply("You are now bankrupt.");
+                        ff.Lose(message, args, games, player.id);
+                    }
                 }
 
                 

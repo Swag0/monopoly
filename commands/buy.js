@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 
 module.exports = {
     name: 'buy',
-    description: 'Buys a thing',
+    description: 'Buy\'s a thing',
     execute(message, args, keyv, games) {
 
         if (args[0] === undefined) return;

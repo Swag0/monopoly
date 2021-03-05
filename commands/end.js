@@ -2,17 +2,25 @@ const Player = require('../player.js');
 const Match = require('../games.js');
 
 module.exports = {
-	name: 'end',
-	description: 'Ends your turn',
-	execute(message, args, keyv, games) {
+    name: 'end',
+    description: 'Ends your turn',
+    execute(message, args, keyv, games) {
 
+        this.EndTurn(message, args, games, false);
+
+        (async () => {
+            await keyv.set('games', games);
+        })();
+    },
+
+    EndTurn(message, args, games, ff) {
         var givenCode = parseInt(args, 10);
 
         if (games[givenCode] == undefined) {
             message.channel.send("That game room does not exist right now.");
             return;
         }
-        
+
         let inGame = false;
 
         for (let i = 0; i < games[givenCode].players.length; i++) {
@@ -27,29 +35,42 @@ module.exports = {
                     return;
                 }
 
-                if (i + 1 === games[givenCode].players.length)  {
-                    games[givenCode].turn = 0;
-                    games[givenCode].phase = "Roll"
-                } else {
-                    games[givenCode].turn++;
-                    games[givenCode].phase = "Roll"
+                for (let skipped = 1; i < games[givenCode].players.length; skipped++) {
+                    if (i + skipped === games[givenCode].players.length) { //if goes to 0
+                        
+                        if (games[givenCode].players[0].id === "-") {
+                            console.log("skipped");
+                        } else {
+                            games[givenCode].turn = 0;
+                            games[givenCode].phase = "Roll";
+                            break;
+                        }
+                    } else {
+                        var effectiveTurn = games[givenCode].turn;
+                        let newTurn = effectiveTurn + skipped;
+                        if (games[givenCode].players[newTurn].id === "-") {
+                            console.log(effectiveTurn);
+                            console.log(skipped);
+                            console.log("skipped to " + newTurn + ".");
+                        } else {
+                            games[givenCode].turn += skipped;
+                            games[givenCode].phase = "Roll";
+                            break;
+                        }
+                    }
                 }
-                
 
-                message.channel.send(`Turn ended. It is <@${games[givenCode].players[games[givenCode].turn].id}>'s turn now.`);
-                
+                if (ff) message.channel.send(`You have given up. It is <@${games[givenCode].players[games[givenCode].turn].id}>'s turn now.`);
+                else message.channel.send(`Turn ended. It is <@${games[givenCode].players[games[givenCode].turn].id}>'s turn now.`);
+
 
                 inGame = true;
 
             }
         }
 
-        if (!inGame) message.channel.send("You are not in that game.");
+        if (!inGame && !ff) message.channel.send("You are not in that game.");
 
-        
-
-		(async () => {
-            await keyv.set('games', games);
-		})();
-	},
+        games[givenCode].ShowBoard(message);
+    }
 };

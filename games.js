@@ -9,6 +9,7 @@ var ORANGEP = '🟠'; //p5
 var PURPLEP = '🟣'; //p6
 var MULTIPLE = '⏺️';
 
+var DEAD = '❌';
 
 var RED = '🟥'; //main / p1
 var BLUE = '🟦'; //p2
@@ -151,15 +152,53 @@ class Match {
         //console.log(text);
         //message.channel.send(text);
 
+        if (this.players[0].id === "-") {
+            REDP = DEAD;
+        } 
+        if (this.players[1].id === "-") {
+            BLUEP = DEAD;
+        } 
+
+
         let players = "";
 
         if (this.players[5]) { //6
+            if (this.players[5].id === "-") {
+                PURPLEP = DEAD;
+            } 
+            if (this.players[4].id === "-") {
+                ORANGEP = DEAD;
+            } 
+            if (this.players[3].id === "-") {
+                YELLOWP = DEAD;
+            } 
+            if (this.players[2].id === "-") {
+                GREENP = DEAD;
+            } 
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}, Player 5: ${ORANGEP}, Player 6: ${PURPLEP}`
         } else if (this.players[4]) {//5
+            if (this.players[4].id === "-") {
+                ORANGEP = DEAD;
+            } 
+            if (this.players[3].id === "-") {
+                YELLOWP = DEAD;
+            } 
+            if (this.players[2].id === "-") {
+                GREENP = DEAD;
+            } 
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}, Player 5: ${ORANGEP}`
         } else if (this.players[3]) {//4
+            if (this.players[3].id === "-") {
+                YELLOWP = DEAD;
+            } 
+            if (this.players[2].id === "-") {
+                GREENP = DEAD;
+            } 
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}`
         } else if (this.players[2]) {//3
+            if (this.players[2].id === "-") {
+                GREENP = DEAD;
+            } 
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}`
         } else if (this.players[1]) {//2
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}`
