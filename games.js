@@ -1,5 +1,6 @@
 const Place = require('./place.js');
 const Discord = require('discord.js');
+const Player = require('./player.js');
 
 var REDP = '🔴'; //main / p1
 var BLUEP = '🔵'; //p2
@@ -19,10 +20,15 @@ var ORANGE = '🟧'; //p5
 var PURPLE = '🟪'; //p6
 
 class Match {
+    /** @type {number} */
     matchID;
+    /** @type {Player[]} */
     players;
+    /** @type {number} */
     turn;
+    /** @type {string} */
     phase; //Rolling phase and buying phase
+    /** @type {Place[]} */
     places;
 
     constructor(matchID = 0, players = [], turn = 0, phase = "Roll") {
@@ -54,15 +60,24 @@ class Match {
 
     CreateBoard() {
         for (let i = 0; i < 40; i++) {
-            if (i === 0) this.places[i] = new Place(i, 0, -2); //special
-            else { //unowned
-                this.places[i] = new Place(i, Math.round((1/145.46)*Math.pow(i+1, 2) + 4), -1);
-                //console.log(this.places[i].cost);
+            switch (i) {
+                case 0: //GO
+                    this.places[i] = new Place(i, 0, -2); 
+                    break;
+                case 15: //Free Parking
+                    this.places[i] = new Place(i, 0, -3);
+                    break;
+                default: //Normal Space
+                    this.places[i] = new Place(i, Math.round((1/145.46)*Math.pow(i+1, 2) + 4), -1);
+                    break; 
             }
         }
         //console.log(this.places);
     }
 
+    /**
+     * @param {number} i
+     */
     GenerateSpots(i) {
 
         let text = "";
@@ -124,6 +139,8 @@ class Match {
                 }
             } else if (this.places[i].owner == -2) { //Special spot
                 text += '❎';
+            } else if (this.places[i].owner == -3) {
+                text += ':free:'
             } else {
                 if (this.places[i].owner != -1) console.log("Someone else owns this.")
                 text += '⬜';

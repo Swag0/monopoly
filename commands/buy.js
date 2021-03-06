@@ -24,7 +24,7 @@ module.exports = {
                     return;
                 }
 
-                if (games[gameCode].phase != "Buy") {
+                if (!games[gameCode].phase.includes("Buy")) {
                     message.reply("It is not buying phase anymore. It is " + games[gameCode].phase.toLowerCase() + "ing phase.");
                     return;
                 }
@@ -44,7 +44,7 @@ module.exports = {
                     curPlace.owner = i;
                     player.money -= curPlace.cost;
                     message.reply(`You spent ¤${curPlace.cost} to buy the space you are on.`);
-                } else if (curPlace.owner === -2) {
+                } else if (curPlace.owner <= -2) {
                     message.reply("You can't buy that space.");
                     break;
                 } else {

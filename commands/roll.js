@@ -28,7 +28,7 @@ module.exports = {
                     return;
                 }
 
-                if (games[gameCode].phase != "Roll") {
+                if (!games[gameCode].phase.includes("Roll")) {
                     message.reply("It is not rolling phase anymore. It is " + games[gameCode].phase.toLowerCase() + "ing phase.");
                     return;
                 }
@@ -63,10 +63,17 @@ module.exports = {
                     }
                 }
 
-                
+                if (curPlace.owner === -3) { //Free Parking
+                    player.money += curPlace.cost;
+                    message.channel.send("You gained ¤" + curPlace.cost + ". The next person will get ¤" + (curPlace.cost + 1) + ".");
+                    curPlace.cost++;
+                }
                 
 
-                if (num1 === num2) message.channel.send("You rolled doubles, so you get another roll.");
+                if (num1 === num2) {
+                    message.channel.send("You rolled doubles, so you get another roll.");
+                    games[gameCode].phase = "Roll/Buy"
+                }
                 else if (i + 1 === games[gameCode].players.length)  {
                     //games[givenCode].turn = 0;
                     games[gameCode].phase = "Buy"

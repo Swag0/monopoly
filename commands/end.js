@@ -38,9 +38,7 @@ module.exports = {
                 for (let skipped = 1; i < games[givenCode].players.length; skipped++) {
                     if (i + skipped === games[givenCode].players.length) { //if goes to 0
                         
-                        if (games[givenCode].players[0].id === "-") {
-                            console.log("skipped");
-                        } else {
+                        if (games[givenCode].players[0].id != "-") {
                             games[givenCode].turn = 0;
                             games[givenCode].phase = "Roll";
                             break;
@@ -48,11 +46,7 @@ module.exports = {
                     } else {
                         var effectiveTurn = games[givenCode].turn;
                         let newTurn = effectiveTurn + skipped;
-                        if (games[givenCode].players[newTurn].id === "-") {
-                            console.log(effectiveTurn);
-                            console.log(skipped);
-                            console.log("skipped to " + newTurn + ".");
-                        } else {
+                        if (games[givenCode].players[newTurn].id != "-") {
                             games[givenCode].turn += skipped;
                             games[givenCode].phase = "Roll";
                             break;
