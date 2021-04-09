@@ -53,7 +53,7 @@ module.exports = {
                 end.EndTurn(message, args, games, true);
 
                 games[givenCode].players[i].id = "-";
-                games[givenCode].players[i].position = 41;
+                games[givenCode].players[i].boardPosition = 41;
             }
         }
 

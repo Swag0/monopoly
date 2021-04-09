@@ -1,11 +1,11 @@
 class Player{
     id;
-    position;
+    boardPosition;
     money;
 
-    constructor(id = 0, position = 0) {
+    constructor(id = 0, boardPosition = 0) {
         this.id = id;
-        this.position = position;
+        this.boardPosition = boardPosition;
         this.money = 55;
     }
 }

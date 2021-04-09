@@ -34,7 +34,7 @@ module.exports = {
 
                 // Check for buyable spot.
 
-                let curPlace = games[gameCode].GetPlace(player.position);
+                let curPlace = games[gameCode].GetPlace(player.boardPosition);
 
                 if (curPlace.owner === -1) { //Gets owner
                     if (player.money < curPlace.cost) {

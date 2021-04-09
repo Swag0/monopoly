@@ -59,17 +59,46 @@ class Match {
     }
 
     CreateBoard() {
+        /*
+        Random Pick 2 
+        16, 17, 18, 19
+        36, 37, 38, 39
+        */
+        let chest1 = Math.floor((Math.random()*4)+16);
+        let chest2 = Math.floor((Math.random()*4)+36);
+        let chance1 = Math.floor((Math.random()*4)+16);
+        let chance2 = Math.floor((Math.random()*4)+36);
+
+        while (chest1 === chance1) {
+            chest1 = Math.floor((Math.random()*4)+16);
+        }
+
+        while (chest2 === chance2) {
+            chest2 = Math.floor((Math.random()*4)+36);
+        }
         for (let i = 0; i < 40; i++) {
             switch (i) {
                 case 0: //GO
-                    this.places[i] = new Place(i, 0, -2); 
+                    this.places[i] = new Place(i, 0, -2);
                     break;
                 case 15: //Free Parking
                     this.places[i] = new Place(i, 0, -3);
                     break;
+                case chest1:
+                    this.places[i] = new Place(i, 0, -4);
+                    break;
+                case chest2:
+                    this.places[i] = new Place(i, 0, -4);
+                    break;
+                case chance1:
+                    this.places[i] = new Place(i, 0, -5);
+                    break;
+                case chance2:
+                    this.places[i] = new Place(i, 0, -5);
+                    break;
                 default: //Normal Space
-                    this.places[i] = new Place(i, Math.round((1/145.46)*Math.pow(i+1, 2) + 4), -1);
-                    break; 
+                    this.places[i] = new Place(i, Math.round((1 / 145.46) * Math.pow(i + 1, 2) + 4), -1);
+                    break;
             }
         }
         //console.log(this.places);
@@ -84,7 +113,7 @@ class Match {
 
         let peopleOn = 0;
         for (let j = 0; j < this.players.length; j++) {
-            if (this.players[j].position === i) {
+            if (this.players[j].boardPosition === i) {
                 peopleOn++;
             }
         }
@@ -92,7 +121,7 @@ class Match {
             text += MULTIPLE;
         } else if (peopleOn === 1) {
             for (let j = 0; j < this.players.length; j++) {
-                if (this.players[j].position === i) {
+                if (this.players[j].boardPosition === i) {
                     switch (j) {
                         case 0:
                             text += REDP;
@@ -139,8 +168,12 @@ class Match {
                 }
             } else if (this.places[i].owner == -2) { //Special spot
                 text += '❎';
-            } else if (this.places[i].owner == -3) {
+            } else if (this.places[i].owner == -3) { //Free Parking
                 text += ':free:'
+            } else if (this.places[i].owner == -4) { //Community Chest
+                text += '💰'
+            } else if (this.places[i].owner == -5) { //Chance
+                text += '❓'
             } else {
                 if (this.places[i].owner != -1) console.log("Someone else owns this.")
                 text += '⬜';
@@ -171,10 +204,10 @@ class Match {
 
         if (this.players[0].id === "-") {
             REDP = DEAD;
-        } 
+        }
         if (this.players[1].id === "-") {
             BLUEP = DEAD;
-        } 
+        }
 
 
         let players = "";
@@ -182,40 +215,40 @@ class Match {
         if (this.players[5]) { //6
             if (this.players[5].id === "-") {
                 PURPLEP = DEAD;
-            } 
+            }
             if (this.players[4].id === "-") {
                 ORANGEP = DEAD;
-            } 
+            }
             if (this.players[3].id === "-") {
                 YELLOWP = DEAD;
-            } 
+            }
             if (this.players[2].id === "-") {
                 GREENP = DEAD;
-            } 
+            }
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}, Player 5: ${ORANGEP}, Player 6: ${PURPLEP}`
         } else if (this.players[4]) {//5
             if (this.players[4].id === "-") {
                 ORANGEP = DEAD;
-            } 
+            }
             if (this.players[3].id === "-") {
                 YELLOWP = DEAD;
-            } 
+            }
             if (this.players[2].id === "-") {
                 GREENP = DEAD;
-            } 
+            }
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}, Player 5: ${ORANGEP}`
         } else if (this.players[3]) {//4
             if (this.players[3].id === "-") {
                 YELLOWP = DEAD;
-            } 
+            }
             if (this.players[2].id === "-") {
                 GREENP = DEAD;
-            } 
+            }
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}, Player 4: ${YELLOWP}`
         } else if (this.players[2]) {//3
             if (this.players[2].id === "-") {
                 GREENP = DEAD;
-            } 
+            }
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}, Player 3: ${GREENP}`
         } else if (this.players[1]) {//2
             players = `Player 1: ${REDP}, Player 2: ${BLUEP}`

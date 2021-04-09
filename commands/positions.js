@@ -18,10 +18,10 @@ module.exports = {
         let text = "";
 
         for (let i = 1; i < games[givenCode].players.length; i++) {
-            text += `, <@${games[givenCode].players[i].id}>: ${games[givenCode].players[i].position}`
+            text += `, <@${games[givenCode].players[i].id}>: ${games[givenCode].players[i].boardPosition}`
         }
 		(async () => {
-            message.channel.send(`In room ${givenCode}, <@${games[givenCode].players[0].id}>: ${games[givenCode].players[0].position}${text}.`)
+            message.channel.send(`In room ${givenCode}, <@${games[givenCode].players[0].id}>: ${games[givenCode].players[0].boardPosition}${text}.`)
             await keyv.set('games', games);
 		})();
 	},

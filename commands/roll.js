@@ -1,6 +1,8 @@
 const Player = require('../player.js');
 const Match = require('../games.js');
 const ff = require('./ff.js');
+const { Chest } = require('../chest.js');
+const { Chance } = require('../chance.js');
 
 module.exports = {
 	name: 'roll',
@@ -36,14 +38,14 @@ module.exports = {
                 inGame = true;
 
                 message.reply("You rolled a " + num1 + " and a " + num2 + ".");
-                games[gameCode].players[i].position += (num1 + num2);
+                games[gameCode].players[i].boardPosition += (num1 + num2);
 
                 
 
 
-                if (games[gameCode].players[i].position > 39) {
-                    games[gameCode].players[i].position = (games[gameCode].players[i].position % 40);
-                    games[gameCode].players[i].money += 10;
+                if (games[gameCode].players[i].boardPosition > 39) {
+                    games[gameCode].players[i].boardPosition = (games[gameCode].players[i].boardPosition % 40);
+                    games[gameCode].players[i].money += 8;
                     message.channel.send("You passed GO.");
                 }
 
@@ -51,7 +53,7 @@ module.exports = {
                 /** @type {Player} */
                 let player = games[gameCode].players[i];
                 /** @type {Place} */
-                let curPlace = games[gameCode].GetPlace(player.position);
+                let curPlace = games[gameCode].GetPlace(player.boardPosition);
 
                 if (curPlace.owner != games[gameCode].turn && curPlace.owner > -1) { //Not owned by self and is owned
                     player.money -= Math.round(curPlace.cost / 3);
@@ -67,6 +69,14 @@ module.exports = {
                     player.money += curPlace.cost;
                     message.channel.send("You gained ¤" + curPlace.cost + ". The next person will get ¤" + (curPlace.cost + 1) + ".");
                     curPlace.cost++;
+                }
+
+                if (curPlace.owner === -4) {//Chest
+                    Chest(message.author.id, games[gameCode], message);
+                }
+
+                if (curPlace.owner === -5) {//Chest
+                    Chance(message.author.id, games[gameCode], message);
                 }
                 
 
